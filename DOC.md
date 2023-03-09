@@ -61,3 +61,12 @@ La documentation nous dis qu'il y a 2 façon de faire.
 
 sur notre menu/page.tsx on importe Link
 puis on change les <a> en <Link>
+
+## Travailler avec les composant
+
+on créer un dossier components
+on créer le composants NavBar
+On remplace toute les navbar avec <NavBar />
+On fait la meme avec Header dans lequel on a importer le state
+
+Puis on a fait des composant unique pour le dossier search.

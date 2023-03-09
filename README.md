@@ -59,5 +59,19 @@ La documentation nous dis qu'il y a 2 façon de faire.
 - link components
 - useRouter Hook
 
-sur notre menu/page.tsx on importe Link
-puis on change les <a> en <Link>
+#### Link components
+
+sur notre menu/page.tsx on importe Link component
+puis on change les <a> en <Link> et on définis le path du composant qu'on veut afficher
+
+Ensuite on définis le userRouter Hook
+
+#### userRouter hook
+
+Dans App/page.tsx on import useRouter et useState
+
+On créer la const router,
+et le state avec location, setlocation.
+On définis l'evenement onClick dans le boutton let's go avec l'algoritme pour rechercher
+
+## Travailler avec les composants.
