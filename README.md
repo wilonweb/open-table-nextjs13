@@ -75,3 +75,37 @@ et le state avec location, setlocation.
 On définis l'evenement onClick dans le boutton let's go avec l'algoritme pour rechercher
 
 ## Travailler avec les composants.
+
+On sépare nos componants en créant un dossier components dans app avec les fichier :
+App > components :
+
+- Header.tsx : reprend le state location, setLocation
+- Navbar.tsx
+- RestaurantCard
+
+App > search > components :
+
+- Header.tsx
+- RestaurantCard
+- SearchSidebar
+
+App > Restaurant > slug > components :
+
+- Header.tsx
+- RestaurantNavBar.tsx
+- Images
+- Rating
+- ReservationCard
+- Reviews
+- Title
+
+On télécharge les extenssions
+
+- React de dsznajder
+- Simple React snippets de Burke Holland ( pour faire des racourci ex rfc )
+
+## Server VS client components
+
+## Question
+
+### Qu'est ce qu'un components ?
