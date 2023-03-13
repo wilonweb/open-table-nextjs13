@@ -106,6 +106,42 @@ On télécharge les extenssions
 
 ## Server VS client components
 
+### Rendering Methods
+
+Pour avoir le html on peut passer par le **client side rendering** ou le **server side rendering**
+
+On peut avoir des **client components** et des **server components**
+
+Le server components et le components par default.
+il permet une meilleur performance et a acces au backend
+
+le client components utilise le "use client" directive en début de script pour convertir le composant en client.
+On l'utilise quand il y a besoin d'un hook comme useState et useEffect useReducer
+D'inreactation onClick(), onChange()
+Faire des HTTP Request.
+Utiliser les React Class components
+
+cf [difference server et client components](https://cdn-images-1.medium.com/max/1600/1*y2CfHt8J8FBkNiUA3Fp-0w.png)
+
+Et revoir les difference entre le client components et server components.
+
+Maintenant nous allons voir lesquel de nos composant sont des client et lesquel sont des server components.
+
+App>components>Header
+On récupere la partie Search Bar avec les hooks et le use client et on met tout ça dans un nouveaux composant App>components>searchBar.tsx
+
+Ensuite on importe egalement la searchBar dans le composant App>search>components>Header.tsx
+
 ## Question
 
 ### Qu'est ce qu'un components ?
+
+### Qu'est ce que le server components, qu'est ce que le clien components ?
+
+### qu'est ce que le use client ?
+
+### A quoi servent les hook useReducer, useEffect, useState
+
+### Qu'est ce que le onClick() et le onChange() ?
+
+### Qu'est ce que les React Class Components ?
