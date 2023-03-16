@@ -132,6 +132,112 @@ On récupere la partie Search Bar avec les hooks et le use client et on met tout
 
 Ensuite on importe egalement la searchBar dans le composant App>search>components>Header.tsx
 
+## Layouts
+
+Pour appliquer le principe DRY ( don't repeat yourself ) on peut reperer les balise contenant les meme classe taillWind.css.
+C'est interessant dans le cas ou on veut changer une couleur, au lieu de devoir changé la couleur dans tout les composants on les change qu'une seul fois
+
+Par default dans notre dossier app on a un fichier Layout.tsx
+
+On commence par insérer la nav qu'on retrouve dans
+
+- app/page.tsx
+- app/search>page.tsx
+
+PS quand un composant n'a pas de balise qu'on l'entoure on peut insérer un fragment avec `<>...</>`
+
+Ensuite on créer un second layout dans Restaurant/slug
+Pour définir un layout pour le sous-menu des restaurant.
+Et on utilise le {children} props pour les composant imbriquer.
+
+Puis on a mis a jour les metadonné head pour changer le nom qui apparait sur l'onglet du navigateur selon la page que l'on visite.
+
+## Fetching Data in Server Components
+
+### A little SQL Lesson
+
+Pour créer une application dynamique, il est important de récupérer les données depuis une base de données externe plutôt que de les coder en dur dans le JSX.
+
+Nous allons voir comment stocker et organiser les donnée avec PostgressSQL et lier les différents table avec une clé primaire (id) pour obtenir des donnéee pertinentes.
+exemple : les table des restaurant avec les tables des menus.
+
+Pour relier Le "tableau des menu" avec la tableau des restaurant il faut ajouter une clé étrangere "restaurant_id" au "tableau des menu' dans laquel la valeur est la clé primaire id du "tableau des restaurant"
+
+### Connecting to a Postgress Database
+
+Dans cette video on vois comment utiliser Postgress avec Prisma.
+
+On vas réer une instance Postress hebergé sur un serveur par exemple un container Docker mais on vas utiliser Supabase un service as a backend similaire a Firebase pour generer un mot de passe de base de donnée et le collé dans son code pour se connecter a postgress.
+On vas utiliser un ORM ( object relation mapping ) au lieux d'ecrire des requette SQL.
+Prisma est le meilleur ORM du marché pour typescript. Il permet de faciliter l'écriture de requêtes, les migrations et la définition des tables avec leur structure.
+Pour se connecter à la base de données à partir de l'application, on peut initialiser un projet Prisma, connecter à la base de données en fournissant l'URL de la base de données, qui se trouve dans une variable d'environnement. Il faut ensuite modifier le mot de passe et on peut copier la chaîne de connexion depuis Supabase et la coller dans l'application.
+
+- On commence par s'inscrire sur supabase
+- Puis on créer un projet OpenTables
+- On copie le password de notre projet et on l'écris en commentaire dans le code.
+- On install prima : npm
+  install prisma@4.8.1
+- on initialise prima : npx prisma init
+- On vas sur le site de Prisma>ProjectSetting>Databse et on copie le connection string pour le coller dans le fichier .env
+- On modifier le [PASSWORD] avec celui qu'on a coller dans notre projet précédement
+
+Maintenant on a connecter notre application a notre BDD
+
+### Defining SQL Scheme
+
+On créer les tables nécessaires pour stocker les données. Pour chaque restaurant, il faut une table avec un ID en tant que clé primaire.
+
+On créer une table pour les items avec un nom, un prix et une description, et de lier chaque item à un restaurant avec une clé étrangère.
+
+Il y a des tables pour les emplacements et les cuisines, qui sont liés à chaque restaurant avec des clés étrangères.
+
+Il restera d'autres tables à ajouter pour des informations telles que les avis, mais pour l'instant, il se concentrera sur ces tables principales.
+
+#### Restaurant
+
+- id
+- name
+- main_img
+- description
+- open-time
+- close_time
+- slug
+- price
+- location_id
+- cuisine_id
+
+#### Items
+
+- id
+- price
+- description
+- restaurant_id
+
+#### Location
+
+- id
+- name
+
+#### Cuisine
+
+- id
+- name
+
+On telecharge l'extenssion Prisma pour avoir le highlight dans schema.prisma
+
+On créer notre model dans schema.prisma ( Prendre cours PostGresSQL)
+
+Puis on push le model avec la commande : npx prisma db push
+
+Et on verifie dans le Supabase>table_editor que les tables sont bien créé.
+
+### Seeding our database
+
+On ajoute les donnée initial du projet a l'aide d'un fichier seed.ts que l'on place dans le dossier pages/API.
+Et on vas sur localhost:3000/API/seed pour lancer le processus de remplissage de données.
+
+Maintenant que la base de donnée est remplis on peut l'intéroger dans notre application.
+
 ## Question
 
 ### Qu'est ce qu'un components ?
