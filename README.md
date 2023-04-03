@@ -307,6 +307,14 @@ Maintenant qu'on a récuperer une variable contenant tout les restaurants on vas
 
 On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec l'option select.
 
+On commence par iterer nos restaurant avec la methode map dans app>page.tsx
+
+```javascript
+{
+  restaurants.map((restaurant) => <RestaurantCard restaurant={restaurant} />);
+}
+```
+
 ## Question
 
 ### Qu'est ce qu'un components ?

@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { RestaurantCardType } from "../page";
+
+interface Props {
+  restaurant: RestaurantCardType;
+}
 
 export default function RestaurantCard() {
   return (
