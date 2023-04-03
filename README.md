@@ -1,13 +1,22 @@
 # Projet Next JS Table
 
+Revoir
+cf [difference server et client components](https://cdn-images-1.medium.com/max/1600/1*y2CfHt8J8FBkNiUA3Fp-0w.png)
+
+Différence entre use Effect/reducer/state
+
+Quel components est un client et quel un server et ecrire un article sur quand utiliser un et l'autre.
+
+Définir ce qu'est un layout et les layout du projet.
+
+Qu'est ce que le data fetching ?
+
 ## Intro
 
 ## Créer NextApp
 
 version 13.1.1 avec typescript sans EsLint
-
 npm run dev pour lancer l'application sur le localhost:3000
-
 App>page.tsx est le composant react qui contient la page d'acceuil
 
 ## Ajout de TailWind
@@ -59,14 +68,16 @@ La documentation nous dis qu'il y a 2 façon de faire.
 - link components
 - useRouter Hook
 
-#### Link components
+#Question C'est quoi la difference entre link component et useRouter Hook
+
+### Link components
 
 sur notre menu/page.tsx on importe Link component
 puis on change les <a> en <Link> et on définis le path du composant qu'on veut afficher
 
 Ensuite on définis le userRouter Hook
 
-#### userRouter hook
+### userRouter hook
 
 Dans App/page.tsx on import useRouter et useState
 
@@ -117,7 +128,7 @@ il permet une meilleur performance et a acces au backend
 
 le client components utilise le "use client" directive en début de script pour convertir le composant en client.
 On l'utilise quand il y a besoin d'un hook comme useState et useEffect useReducer
-D'inreactation onClick(), onChange()
+D'interaction onClick(), onChange()
 Faire des HTTP Request.
 Utiliser les React Class components
 
@@ -227,7 +238,7 @@ On telecharge l'extenssion Prisma pour avoir le highlight dans schema.prisma
 
 On créer notre model dans schema.prisma ( Prendre cours PostGresSQL)
 
-Puis on push le model avec la commande : npx prisma db push
+Puis on push le model avec la commande : `npx prisma db push`
 
 Et on verifie dans le Supabase>table_editor que les tables sont bien créé.
 
@@ -237,6 +248,64 @@ On ajoute les donnée initial du projet a l'aide d'un fichier seed.ts que l'on p
 Et on vas sur localhost:3000/API/seed pour lancer le processus de remplissage de données.
 
 Maintenant que la base de donnée est remplis on peut l'intéroger dans notre application.
+
+### How we fetch Data in server Components ?
+
+Dans cette section on vois comment récupérer des data a partir d'une BDD pour les utiliser dans une application NextJS.
+
+La methode classique a l'aide d'une requette HTTP qui récupère les data au format JSON
+
+Cependant dans une application NextJS la récupération de donné se fait directement via un ORM ou une requete SQL. Les data sont transmise au composant serveur.
+Et une fois que toute les data sont récupéré le composnant serveur est envoyé au client.
+
+Maintenant nous allons voir comment fetch nos data dans notre premier server components.
+
+### Fetching data in server components
+
+Dans cette section nous allons récupérer les donnée des restaurants et les utiliser pour créer une page dynamique avec Prisma.
+
+Pour cela on vas créer une fonction qui stock les donnée dans une variable
+
+Pour cela on ouvre le script app>page.tsx en créant une instance Prisma car par default les composants sont des server-components et n'accepte pas les requetes http.
+
+```javascript
+import Header from "./components/Header";
+import RestaurantCard from "./components/RestaurantCard";
+/*Ajout de l'import Prisma*/
+import { PrismaClient } from "@prisma/client";
+
+/* déclaration de l'instance prisma */
+const prisma = new PrismaClient();
+
+/* déclaration de la fonction (avec la methode findmany pour trouver toute les data) et retourner le resultat dans une variable  restaurants */
+const fetchRestaurants = async () => {
+  const restaurants = await prisma.restaurant.findMany();
+
+  return restaurants;
+};
+
+//ajout du async
+export default async function Home() {
+  /*appelle de la fonction fetchRestaurant qui attend les resultat dans la variable restaurant qu'on affiche avec un console.log*/
+  const restaurants = await fetchRestaurants();
+
+  console.log({ restaurants });
+  return (
+    <main>
+      <Header />
+      <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
+        <RestaurantCard />
+      </div>
+    </main>
+  );
+}
+```
+
+### Little TypeScript Lesson
+
+Maintenant qu'on a récuperer une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant par les informations en tant que props.
+
+On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec l'option select.
 
 ## Question
 
@@ -251,3 +320,7 @@ Maintenant que la base de donnée est remplis on peut l'intéroger dans notre ap
 ### Qu'est ce que le onClick() et le onChange() ?
 
 ### Qu'est ce que les React Class Components ?
+
+### Comment remplir des données ?
+
+( localhost/api/seed )
