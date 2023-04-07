@@ -5,7 +5,7 @@ interface Props {
   restaurant: RestaurantCardType;
 }
 
-export default function RestaurantCard() {
+export default function RestaurantCard({}: Props) {
   return (
     <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
       <Link href="/restaurant/milestones-grill">

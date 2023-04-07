@@ -1,5 +1,7 @@
 # Projet Next JS Table
 
+[github du cours udemy](https://github.com/harblaith7/Next13-Udemy-Course)
+
 Revoir
 cf [difference server et client components](https://cdn-images-1.medium.com/max/1600/1*y2CfHt8J8FBkNiUA3Fp-0w.png)
 
@@ -303,11 +305,23 @@ export default async function Home() {
 
 ### Little TypeScript Lesson
 
-Maintenant qu'on a récuperer une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant par les informations en tant que props.
+Maintenant qu'on a récuperer une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant les informations en tant que props.
 
-On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec l'option select.
+On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec la methode select.
 
-On commence par iterer nos restaurant avec la methode map dans app>page.tsx
+On commence par iterer les restaurants de notre **render** avec la methode map() dans app>page.tsx
+
+ensuite on recupere les donnée de la base avec la methode `select()` pour ne récupérer que celle dont on a besoin.
+
+On créer une interface pour décrire les données du restaurant récupéré de la base de donnée
+cf fonction fléché `fetchRestaurant` dans app>page.tsx
+Et l'interface de type de props définis dans le composant `RestaurantCard.tsx` dans app>components>RestaurantCard.
+
+Puis on utilise l'interface dans la methode map pour verifier que chaque restaurant a les donnée approprié.
+
+Maintenant on peut afficher dynamiquement les carte de restaurant avec les donnée de la base de données.
+
+Puis on créer l'interface RestaurantCardType
 
 ```javascript
 {
@@ -315,11 +329,13 @@ On commence par iterer nos restaurant avec la methode map dans app>page.tsx
 }
 ```
 
+Sans oublier de créer une interface pour décrire les props attendues par la carte de restaurant.
+
 ## Question
 
 ### Qu'est ce qu'un components ?
 
-### Qu'est ce que le server components, qu'est ce que le clien components ?
+### Qu'est ce que le server components, qu'est ce que le client components ?
 
 ### qu'est ce que le use client ?
 
@@ -330,5 +346,7 @@ On commence par iterer nos restaurant avec la methode map dans app>page.tsx
 ### Qu'est ce que les React Class Components ?
 
 ### Comment remplir des données ?
+
+### Qu'est ce qu'une inteface ?
 
 ( localhost/api/seed )
