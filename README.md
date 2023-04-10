@@ -354,6 +354,12 @@ Pour résumé on a rendu les donnée pour :
 
 ## Question
 
+### Qu'est ce qu'une clé primaire clé étrangere ?
+
+Une clé étrangère est un champs dans une table qui fait référence a la clé unique d'une autre table
+
+Par exemple, dans une table "Commandes", la clé étrangère pourrait faire référence à la clé primaire de la table "Clients", pour identifier à quel client appartient la commande.
+
 ### Qu'est ce qu'un components ?
 
 ### Qu'est ce que le server components, qu'est ce que le client components ?
