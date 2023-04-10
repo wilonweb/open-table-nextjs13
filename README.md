@@ -305,7 +305,7 @@ export default async function Home() {
 
 ### Little TypeScript Lesson
 
-Maintenant qu'on a récuperer une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant les informations en tant que props.
+Maintenant qu'on a récuperé une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant les informations en tant que props.
 
 On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec la methode select.
 
@@ -317,9 +317,9 @@ On créer une interface pour décrire les données du restaurant récupéré de 
 cf fonction fléché `fetchRestaurant` dans app>page.tsx
 Et l'interface de type de props définis dans le composant `RestaurantCard.tsx` dans app>components>RestaurantCard.
 
-Puis on utilise l'interface dans la methode map pour verifier que chaque restaurant a les donnée approprié.
+Puis on utilise l'interface dans la methode map pour verifier que chaque restaurant à les donnée approprié.
 
-Maintenant on peut afficher dynamiquement les carte de restaurant avec les donnée de la base de données.
+Maintenant on peut afficher dynamiquement les carte du restaurant avec les donnée de la base de données.
 
 Puis on créer l'interface RestaurantCardType
 
@@ -330,6 +330,27 @@ Puis on créer l'interface RestaurantCardType
 ```
 
 Sans oublier de créer une interface pour décrire les props attendues par la carte de restaurant.
+
+### Rendering the Fetched Data
+
+Nous avons maintenant passé les données à la carte du restaurant, et nous allons utiliser les props pour rendre dynamiquement les cartes.
+
+Pour cela, nous allons utiliser la syntaxe `{restaurant.name}` idem pour la `{restaurant.cuisine}` et la `{restaurant.location}` dans RestaurantCard.tsx
+
+Nous devons changer le lien `<Link href={`/restaurant/${restaurant.slug}`}>`
+sans oublier d'ajouter la propriété slug a notre interface.
+
+Nous devons également le nombre de $ qui évalue le prix et qui est une valeur enum.
+
+Pour le prix, nous allons créer un composant séparé appelé "PrixPoints" pour effectuer des calculs de logique. Ce composant prendra une prop "price" qui aura une valeur de type "price" provenant du "price client". Il y aura trois cas à gérer pour les prix : "pas cher", "normal" et "cher".
+
+Nous allons créer une fonction "renderPrice" dans le component app/components/Price.tsx pour rendre les prix en fonction de leur catégorie, puis utiliser cette fonction pour afficher le prix dans la carte du restaurant.
+
+Pour résumé on a rendu les donnée pour :
+
+- afficher les nom des restaurant etc ...
+- dynamiser l'url avec le slug restaurant-name
+- énumerer le prix du restaurant dans le composant price.tsx ( Cheap, regular ... )
 
 ## Question
 
@@ -347,6 +368,12 @@ Sans oublier de créer une interface pour décrire les props attendues par la ca
 
 ### Comment remplir des données ?
 
+( localhost/api/seed )
+
 ### Qu'est ce qu'une inteface ?
 
-( localhost/api/seed )
+### Comment itérer la liste de restaurant ?
+
+### C'est quoi une valeur enum ?
+
+un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
