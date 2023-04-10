@@ -303,8 +303,6 @@ export default async function Home() {
 }
 ```
 
-rr
-
 ### Little TypeScript Lesson
 
 Maintenant qu'on a récuperé une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant les informations en tant que props.
