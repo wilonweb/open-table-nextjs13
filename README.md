@@ -364,12 +364,12 @@ ConnectionError est courante lors de l'utilisation d'une base de données gratui
 ### Fetching restaurant by slug
 
 Pour récuperer dynamiquement la page d'un restaurant.
-<<<<<<< HEAD
+HEAD
 
 =======
 
-> > > > > > > Fetching-Data
-> > > > > > > On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
+Fetching-Data
+On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
 
 ```javascript
 const fetchRestaurantBySlug = async (slug: string) => {
