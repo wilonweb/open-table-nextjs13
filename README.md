@@ -364,7 +364,6 @@ ConnectionError est courante lors de l'utilisation d'une base de données gratui
 ### Fetching restaurant by slug
 
 Pour récuperer dynamiquement la page d'un restaurant.
-
 On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
 
 ```javascript
@@ -414,13 +413,41 @@ ce qui permet de récupérer
 }
 ```
 
-qui vas nous permettre d'extraire le slug en récuperant
+qui vas nous permettre d'extraire le slug en changeant le paraetre "props" avec
 
 ```javascript
 ({ params }: { params: { slug: string } });
 ```
 
-On selectionne seuelemt les information nécéssaire avec la methode select et l'interface.
+Ce qui donne
+
+```javascript
+export default async function RestaurantDetails({
+  params,
+}: {
+  params: { slug: string },
+}) {
+  const restaurant = await fetchRestaurantBySlug(params.slug);
+  console.log(restaurant);
+  return (
+    <>
+      <div className="bg-white w-[70%] rounded p-3 shadow">
+        <RestaurantNavBar />
+        <Title />
+        <Rating />
+        <Description />
+        <Images />
+        <Reviews />
+      </div>
+      <div className="w-[27%] relative text-reg">
+        <ReservationCard />
+      </div>
+    </>
+  );
+}
+```
+
+On selectionne seulement les information nécéssaire avec la methode select et l'interface.
 
 ```javascript
 interface Restaurant {
@@ -456,7 +483,7 @@ const fetchRestaurantBySlug = async (slug: string) => {
 };
 ```
 
-#### Question Pourquoi dois t'on mettre une interface avec le sect ?
+#### Question Pourquoi dois t'on mettre une interface avec le select ?
 
 ## Question
 
