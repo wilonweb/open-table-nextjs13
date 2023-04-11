@@ -1,0 +1,16 @@
+on créer une instance Prisma dans une fonction await/async ou on flitre avec where: slug et la mthode find.unique et qui attend les information dans une variable.
+exemple **const restaurant**
+
+On passe dans le render la (props: any)
+pour loger {props} dans la console
+
+Ce qui nous donne les information nécéssaire pour mentionner en parametre de notre render exemple :
+
+```javascript
+({ params }: { params: { slug: string } });
+```
+
+Puis on définis dans le render de notre variable **const restaurant** avec un const restaurant = await fetchRestaurantBySlug(params.slug);
+Pour récuperer le slug.
+
+Que l'on peut loger

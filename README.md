@@ -363,12 +363,8 @@ ConnectionError est courante lors de l'utilisation d'une base de données gratui
 
 ### Fetching restaurant by slug
 
-Pour récuperer dynamiquement la page d'un restaurant.
-HEAD
+Pour récuperer les information d'un restaurant a partir du slug
 
-=======
-
-Fetching-Data
 On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
 
 ```javascript
@@ -388,6 +384,7 @@ Puis on passe props en parametre dans notre render pour y faire un console.log
 ```javascript
 export default function RestaurantDetails(props: any) {
   console.log({ props });
+  console.log(restaurant);
   //const restaurant = await fetchRestaurantBySlug();
   return (
     <>
@@ -418,9 +415,7 @@ ce qui permet de récupérer
 }
 ```
 
-HEAD
-qui vas nous permettre d'extraire le slug en récuperant
-qui vas nous permettre d'extraire le slug en changeant le paraetre "props" avec
+ce qui vas nous permettre d'extraire le slug en récuperant
 
 Fetching-Data
 
@@ -558,4 +553,23 @@ Par exemple, dans une table "Commandes", la clé étrangère pourrait faire réf
 
 un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
 
-### Comment fetch les donnée dans un composant.
+### Comment fetch les donnée dans un composant (slug)
+
+on créer une instance Prisma dans une fonction await/async ou on flitre avec where: slug et la methode find.unique et qui attend les information dans une variable.
+exemple **const restaurant**
+
+On passe dans le render la (props: any)
+pour loger {props} dans la console
+
+Ce qui nous donne les information nécéssaire pour mentionner en parametre de notre render
+
+exemple :
+
+```javascript
+({ params }: { params: { slug: string } });
+```
+
+Puis on définis dans le render de notre variable **const restaurant** avec un const restaurant = await fetchRestaurantBySlug(params.slug);
+Pour récuperer le slug.
+
+Ensuite on redéfinis notre instance prisma en mentionant le type "string" de notre props slug ainsi qu'une Promise
