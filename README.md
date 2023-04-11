@@ -1,13 +1,24 @@
 # Projet Next JS Table
 
+[github du cours udemy](https://github.com/harblaith7/Next13-Udemy-Course)
+
+Revoir
+cf [difference server et client components](https://cdn-images-1.medium.com/max/1600/1*y2CfHt8J8FBkNiUA3Fp-0w.png)
+
+Différence entre use Effect/reducer/state
+
+Quel components est un client et quel un server et ecrire un article sur quand utiliser un et l'autre.
+
+Définir ce qu'est un layout et les layout du projet.
+
+Qu'est ce que le data fetching ?
+
 ## Intro
 
 ## Créer NextApp
 
 version 13.1.1 avec typescript sans EsLint
-
 npm run dev pour lancer l'application sur le localhost:3000
-
 App>page.tsx est le composant react qui contient la page d'acceuil
 
 ## Ajout de TailWind
@@ -59,14 +70,16 @@ La documentation nous dis qu'il y a 2 façon de faire.
 - link components
 - useRouter Hook
 
-#### Link components
+#Question C'est quoi la difference entre link component et useRouter Hook
+
+### Link components
 
 sur notre menu/page.tsx on importe Link component
 puis on change les <a> en <Link> et on définis le path du composant qu'on veut afficher
 
 Ensuite on définis le userRouter Hook
 
-#### userRouter hook
+### userRouter hook
 
 Dans App/page.tsx on import useRouter et useState
 
@@ -117,7 +130,7 @@ il permet une meilleur performance et a acces au backend
 
 le client components utilise le "use client" directive en début de script pour convertir le composant en client.
 On l'utilise quand il y a besoin d'un hook comme useState et useEffect useReducer
-D'inreactation onClick(), onChange()
+D'interaction onClick(), onChange()
 Faire des HTTP Request.
 Utiliser les React Class components
 
@@ -227,7 +240,7 @@ On telecharge l'extenssion Prisma pour avoir le highlight dans schema.prisma
 
 On créer notre model dans schema.prisma ( Prendre cours PostGresSQL)
 
-Puis on push le model avec la commande : npx prisma db push
+Puis on push le model avec la commande : `npx prisma db push`
 
 Et on verifie dans le Supabase>table_editor que les tables sont bien créé.
 
@@ -238,11 +251,224 @@ Et on vas sur localhost:3000/API/seed pour lancer le processus de remplissage de
 
 Maintenant que la base de donnée est remplis on peut l'intéroger dans notre application.
 
+### How we fetch Data in server Components ?
+
+Dans cette section on vois comment récupérer des data a partir d'une BDD pour les utiliser dans une application NextJS.
+
+La methode classique a l'aide d'une requette HTTP qui récupère les data au format JSON
+
+Cependant dans une application NextJS la récupération de donné se fait directement via un ORM ou une requete SQL. Les data sont transmise au composant serveur.
+Et une fois que toute les data sont récupéré le composnant serveur est envoyé au client.
+
+Maintenant nous allons voir comment fetch nos data dans notre premier server components.
+
+### Fetching data in server components
+
+Dans cette section nous allons récupérer les donnée des restaurants et les utiliser pour créer une page dynamique avec Prisma.
+
+Pour cela on vas créer une fonction qui stock les donnée dans une variable
+
+Pour cela on ouvre le script app>page.tsx en créant une instance Prisma car par default les composants sont des server-components et n'accepte pas les requetes http.
+
+```javascript
+import Header from "./components/Header";
+import RestaurantCard from "./components/RestaurantCard";
+/*Ajout de l'import Prisma*/
+import { PrismaClient } from "@prisma/client";
+
+/* déclaration de l'instance prisma */
+const prisma = new PrismaClient();
+
+/* déclaration de la fonction (avec la methode findmany pour trouver toute les data) et retourner le resultat dans une variable  restaurants 
+
+findMany est une méthode de requête standard dans Prisma
+utile pour récupérer tous les enregistrements de la table correspondante sans avoir à écrire manuellement la requête SQ
+*/
+const fetchRestaurants = async () => {
+  const restaurants = await prisma.restaurant.findMany();
+  return restaurants;
+};
+
+//ajout du async
+export default async function Home() {
+  /*appelle de la fonction fetchRestaurant qui attend les resultat dans la variable restaurant qu'on affiche avec un console.log
+  On pourras ensuite apeller les data dans notre composant Restaurant
+  */
+  const restaurants = await fetchRestaurants();
+
+  console.log({ restaurants });
+  return (
+    <main>
+      <Header />
+      <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
+        <RestaurantCard />
+      </div>
+    </main>
+  );
+}
+```
+
+### Little TypeScript Lesson
+
+Maintenant qu'on a récuperé une variable contenant tout les restaurants on vas itérer afin de retourner une carte pour chaque restaurant en passant les informations en tant que props.
+
+On vas voir comment utiliser typeScript pour définir des types de props et selectionner les donnée dont on a besoin avec la methode select.
+
+On commence par iterer les restaurants de notre **render** avec la methode map() dans app>page.tsx
+
+ensuite on selectionne les data qu'on fetch avec `select()` pour ne récupérer que celle dont on a besoin.
+
+On créer une interface pour décrire les données du restaurant récupéré de la base de donnée
+cf fonction fléché `fetchRestaurant` dans app>page.tsx
+Et l'interface de type de props définis dans le composant `RestaurantCard.tsx` dans app>components>RestaurantCard.
+
+Puis on utilise l'interface dans la methode map pour verifier que chaque restaurant à les donnée approprié.
+
+Maintenant on peut afficher dynamiquement les carte du restaurant avec les donnée de la base de données.
+
+Puis on créer l'interface RestaurantCardType
+
+```javascript
+{
+  restaurants.map((restaurant) => <RestaurantCard restaurant={restaurant} />);
+}
+```
+
+Sans oublier de créer une interface pour décrire les props attendues par la carte de restaurant.
+
+### Rendering the Fetched Data
+
+Nous avons maintenant passé les données à la carte du restaurant, et nous allons utiliser les props pour rendre dynamiquement les cartes.
+
+Pour cela, nous allons utiliser la syntaxe `{restaurant.name}` idem pour la `{restaurant.cuisine}` et la `{restaurant.location}` dans RestaurantCard.tsx
+
+Nous devons changer le lien `<Link href={`/restaurant/${restaurant.slug}`}>`
+sans oublier d'ajouter la propriété slug a notre interface.
+
+Nous devons également le nombre de $ qui évalue le prix et qui est une valeur enum.
+
+Pour le prix, nous allons créer un composant séparé appelé "PrixPoints" pour effectuer des calculs de logique. Ce composant prendra une prop "price" qui aura une valeur de type "price" provenant du "price client". Il y aura trois cas à gérer pour les prix : "pas cher", "normal" et "cher".
+
+Nous allons créer une fonction "renderPrice" dans le component app/components/Price.tsx pour rendre les prix en fonction de leur catégorie, puis utiliser cette fonction pour afficher le prix dans la carte du restaurant.
+
+Pour résumé on a rendu les donnée pour :
+
+- afficher les nom des restaurant etc ...
+- dynamiser l'url avec le slug restaurant-name
+- énumerer le prix du restaurant dans le composant price.tsx ( Cheap, regular ... )
+
+### A common error you might encounter
+
+ConnectionError est courante lors de l'utilisation d'une base de données gratuite comme Superbase, et qu'elle est indépendante de Next.js ou du code que l'on a écrit. La seule façon d'éviter cette erreur est d'utiliser une base de données hébergée payante ou d'exécuter une base de données localement sur sa propre machine. Si l'erreur apparaît, il suffit simplement de redémarrer le projet pour résoudre le problème.
+
+### Fetching restaurant by slug
+
+Pour récuperer dynamiquement la page d'un restaurant.
+
+On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
+
+```javascript
+const fetchRestaurantBySlug = async (slug: string) => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+  });
+
+  return restaurant;
+};
+```
+
+Puis on passe props en parametre dans notre render pour y faire un console.log
+
+```javascript
+export default function RestaurantDetails(props: any) {
+  console.log({ props });
+  //const restaurant = await fetchRestaurantBySlug();
+  return (
+    <>
+      <div className="bg-white w-[70%] rounded p-3 shadow">
+        <RestaurantNavBar />
+        <Title />
+        <Rating />
+        <Description />
+        <Images />
+        <Reviews />
+      </div>
+      <div className="w-[27%] relative text-reg">
+        <ReservationCard />
+      </div>
+    </>
+  );
+}
+```
+
+ce qui permet de récupérer
+
+```
+{
+  props: {
+    params: { slug: 'ramakrishna-indian-restaurant-ottawa' },
+    searchParams: {}
+  }
+}
+```
+
+qui vas nous permettre d'extraire le slug en récuperant
+
+```javascript
+({ params }: { params: { slug: string } });
+```
+
+On selectionne seuelemt les information nécéssaire avec la methode select et l'interface. o
+
+```javascript
+interface Restaurant {
+  id: true;
+  name: true;
+  images: true;
+  description: true;
+  slug: true;
+}
+```
+
+```javascript
+const fetchRestaurantBySlug = async (slug: string) => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      id: true,
+      name: true,
+      images: true,
+      description: true,
+      slug: true,
+    },
+  });
+
+  //Au cas ou le slug fournis ne correspond pas a un restaurant
+  if (!restaurant) {
+    throw new Error();
+  }
+
+  return restaurant;
+};
+```
+
+#### Question Pourquoi dois t'on mettre une interface avec le select ?
+
 ## Question
+
+### Qu'est ce qu'une clé primaire clé étrangere ?
+
+Une clé étrangère est un champs dans une table qui fait référence a la clé unique d'une autre table
+
+Par exemple, dans une table "Commandes", la clé étrangère pourrait faire référence à la clé primaire de la table "Clients", pour identifier à quel client appartient la commande.
 
 ### Qu'est ce qu'un components ?
 
-### Qu'est ce que le server components, qu'est ce que le clien components ?
+### Qu'est ce que le server components, qu'est ce que le client components ?
 
 ### qu'est ce que le use client ?
 
@@ -251,3 +477,15 @@ Maintenant que la base de donnée est remplis on peut l'intéroger dans notre ap
 ### Qu'est ce que le onClick() et le onChange() ?
 
 ### Qu'est ce que les React Class Components ?
+
+### Comment remplir des données ?
+
+( localhost/api/seed )
+
+### Qu'est ce qu'une inteface ?
+
+### Comment itérer la liste de restaurant ?
+
+### C'est quoi une valeur enum ?
+
+un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
