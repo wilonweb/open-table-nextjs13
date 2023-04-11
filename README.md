@@ -279,16 +279,21 @@ import { PrismaClient } from "@prisma/client";
 /* déclaration de l'instance prisma */
 const prisma = new PrismaClient();
 
-/* déclaration de la fonction (avec la methode findmany pour trouver toute les data) et retourner le resultat dans une variable  restaurants */
+/* déclaration de la fonction (avec la methode findmany pour trouver toute les data) et retourner le resultat dans une variable  restaurants 
+
+findMany est une méthode de requête standard dans Prisma
+utile pour récupérer tous les enregistrements de la table correspondante sans avoir à écrire manuellement la requête SQ
+*/
 const fetchRestaurants = async () => {
   const restaurants = await prisma.restaurant.findMany();
-
   return restaurants;
 };
 
 //ajout du async
 export default async function Home() {
-  /*appelle de la fonction fetchRestaurant qui attend les resultat dans la variable restaurant qu'on affiche avec un console.log*/
+  /*appelle de la fonction fetchRestaurant qui attend les resultat dans la variable restaurant qu'on affiche avec un console.log
+  On pourras ensuite apeller les data dans notre composant Restaurant
+  */
   const restaurants = await fetchRestaurants();
 
   console.log({ restaurants });
@@ -311,7 +316,7 @@ On vas voir comment utiliser typeScript pour définir des types de props et sele
 
 On commence par iterer les restaurants de notre **render** avec la methode map() dans app>page.tsx
 
-ensuite on recupere les donnée de la base avec la methode `select()` pour ne récupérer que celle dont on a besoin.
+ensuite on selectionne les data qu'on fetch avec `select()` pour ne récupérer que celle dont on a besoin.
 
 On créer une interface pour décrire les données du restaurant récupéré de la base de donnée
 cf fonction fléché `fetchRestaurant` dans app>page.tsx
@@ -351,6 +356,107 @@ Pour résumé on a rendu les donnée pour :
 - afficher les nom des restaurant etc ...
 - dynamiser l'url avec le slug restaurant-name
 - énumerer le prix du restaurant dans le composant price.tsx ( Cheap, regular ... )
+
+### A common error you might encounter
+
+ConnectionError est courante lors de l'utilisation d'une base de données gratuite comme Superbase, et qu'elle est indépendante de Next.js ou du code que l'on a écrit. La seule façon d'éviter cette erreur est d'utiliser une base de données hébergée payante ou d'exécuter une base de données localement sur sa propre machine. Si l'erreur apparaît, il suffit simplement de redémarrer le projet pour résoudre le problème.
+
+### Fetching restaurant by slug
+
+Pour récuperer dynamiquement la page d'un restaurant.
+
+On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
+
+```javascript
+const fetchRestaurantBySlug = async (slug: string) => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+  });
+
+  return restaurant;
+};
+```
+
+Puis on passe props en parametre dans notre render pour y faire un console.log
+
+```javascript
+export default function RestaurantDetails(props: any) {
+  console.log({ props });
+  //const restaurant = await fetchRestaurantBySlug();
+  return (
+    <>
+      <div className="bg-white w-[70%] rounded p-3 shadow">
+        <RestaurantNavBar />
+        <Title />
+        <Rating />
+        <Description />
+        <Images />
+        <Reviews />
+      </div>
+      <div className="w-[27%] relative text-reg">
+        <ReservationCard />
+      </div>
+    </>
+  );
+}
+```
+
+ce qui permet de récupérer
+
+```
+{
+  props: {
+    params: { slug: 'ramakrishna-indian-restaurant-ottawa' },
+    searchParams: {}
+  }
+}
+```
+
+qui vas nous permettre d'extraire le slug en récuperant
+
+```javascript
+({ params }: { params: { slug: string } });
+```
+
+On selectionne seuelemt les information nécéssaire avec la methode select et l'interface.
+
+```javascript
+interface Restaurant {
+  id: true;
+  name: true;
+  images: true;
+  description: true;
+  slug: true;
+}
+```
+
+```javascript
+const fetchRestaurantBySlug = async (slug: string) => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      id: true,
+      name: true,
+      images: true,
+      description: true,
+      slug: true,
+    },
+  });
+
+  //Au cas ou le slug fournis ne correspond pas a un restaurant
+  if (!restaurant) {
+    throw new Error();
+  }
+
+  return restaurant;
+};
+```
+
+#### Question Pourquoi dois t'on mettre une interface avec le sect ?
 
 ## Question
 
