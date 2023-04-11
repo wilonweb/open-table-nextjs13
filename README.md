@@ -459,7 +459,7 @@ export default async function RestaurantDetails({
 
 On selectionne seuelemt les information nécéssaire avec la methode select et l'interface.
 
-Ce qui donne
+Ce qui donne,
 
 ```javascript
 export default async function RestaurantDetails({
