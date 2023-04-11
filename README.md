@@ -418,12 +418,11 @@ ce qui permet de récupérer
 }
 ```
 
-<<<<<<< HEAD
+HEAD
 qui vas nous permettre d'extraire le slug en récuperant
-=======
 qui vas nous permettre d'extraire le slug en changeant le paraetre "props" avec
 
-> > > > > > > Fetching-Data
+Fetching-Data
 
 ```javascript
 ({ params }: { params: { slug: string } });
@@ -558,3 +557,5 @@ Par exemple, dans une table "Commandes", la clé étrangère pourrait faire réf
 ### C'est quoi une valeur enum ?
 
 un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
+
+### Comment fetch les donnée dans un composant.
