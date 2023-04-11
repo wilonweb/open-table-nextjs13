@@ -457,7 +457,6 @@ export default async function RestaurantDetails({
 }
 ```
 
-toto
 On selectionne seuelemt les information nécéssaire avec la methode select et l'interface.
 
 Ce qui donne
