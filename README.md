@@ -489,7 +489,7 @@ export default async function RestaurantDetails({
 
 On selectionne seulement les information nécéssaire avec la methode select et l'interface.
 
-> > > > > > > Fetching-Data
+Fetching-Data
 
 ```javascript
 interface Restaurant {
