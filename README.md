@@ -485,6 +485,70 @@ const fetchRestaurantBySlug = async (slug: string) => {
 
 #### Question Pourquoi dois t'on mettre une interface avec le select ?
 
+### Populating the Data in the Restaurant Page
+
+On passe les props dans les <Composant />
+Puis on passe les valeur dans les parametre de nos render et les render
+
+Pour les **images** on fait :
+
+- un map pour iterer les images
+- une condition pour mettre un s a la fin de photo ou pas.
+
+```javascript restaurant/slug/components/images.tsx
+export default function Images({ images }: { images: string[] }) {
+  return (
+    <div>
+      <h1 className="font-bold text-3xl mt-10 mb-7 border-b pb-5">
+        {images.length}photo{images.length > 1 ? "s" : ""}
+      </h1>
+      <div className="flex flex-wrap">
+        {images.map((image) => (
+          <img className="w-56 h-44 mr-1 mb-1" src={image} alt="" />
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+Et pour le **Layout** on déclare les argument restaurant>slug>layout.tsx
+et les props dans le restaurant>slug>components>header
+
+Et on créer une fonction qui met le nom de la ville entre ()
+
+```javascript (restaurant>slug>components>header.tsx)
+export default function Header({ name }: { name: string }) {
+  const renderTitle = () => {
+    const nameArray = name.split("-");
+
+    nameArray[nameArray.length - 1] = `(${nameArray[nameArray.length - 1]})`;
+    return nameArray.join(" ");
+  };
+
+  return (
+    <div className="h-96 overflow-hidden">
+      <div className="bg-center bg-gradient-to-r from-[#0f1f47] to-[#5f6984] h-full flex justify-center items-center">
+        <h1 className="text-7xl text-white captitalize text-shadow text-center">
+          {renderTitle()}
+        </h1>
+      </div>
+    </div>
+  );
+}
+```
+
+### Fetching the restaurant menu
+
+!!!
+@4:26 pourquoi on ajoute la prop a <Menu menu={menu}/> ?
+
+Dans cette section on vas aficher les donné des différent menu disponible pour un restaurant.
+
+Et on ajoute une condition pour dire si il n'y a pas de menu.
+
+To revoir le chapitre et noté les étapes.
+
 ## Question
 
 ### Qu'est ce qu'une clé primaire clé étrangere ?
