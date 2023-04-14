@@ -585,4 +585,4 @@ Par exemple, dans une table "Commandes", la clé étrangère pourrait faire réf
 
 un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
 
-bonjour
+bonjour2
