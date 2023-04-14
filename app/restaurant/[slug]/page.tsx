@@ -7,6 +7,7 @@ import ReservationCard from "./components/ReservationCard";
 import RestaurantNavBar from "./components/RestaurantNavBar";
 import Title from "./components/Title";
 import { PrismaClient } from "@prisma/client";
+import Menu from "./components/Menu";
 
 const prisma = new PrismaClient();
 
@@ -49,15 +50,16 @@ export default async function RestaurantDetails({
   return (
     <>
       <div className="bg-white w-[70%] rounded p-3 shadow">
-        <RestaurantNavBar />
-        <Title />
+        <RestaurantNavBar slug={restaurant.slug} />
+        <Title name={restaurant.name} />
         <Rating />
-        <Description />
-        <Images />
+        <Description description={restaurant.description} />
+        <Images images={restaurant.images} />
         <Reviews />
       </div>
       <div className="w-[27%] relative text-reg">
         <ReservationCard />
+        {/*<Menu menu={menu} />*/}
       </div>
     </>
   );
