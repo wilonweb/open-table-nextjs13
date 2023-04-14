@@ -549,6 +549,10 @@ Et on ajoute une condition pour dire si il n'y a pas de menu.
 
 To revoir le chapitre et noté les étapes.
 
+## Section 6: Time to get your hand dirty
+
+### Challenge 1 : Add Query Parameter.
+
 ## Question
 
 ### Qu'est ce qu'une clé primaire clé étrangere ?
@@ -580,3 +584,5 @@ Par exemple, dans une table "Commandes", la clé étrangère pourrait faire réf
 ### C'est quoi une valeur enum ?
 
 un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
+
+bonjour
