@@ -180,7 +180,7 @@ Pour relier Le "tableau des menu" avec la tableau des restaurant il faut ajouter
 
 Dans cette video on vois comment utiliser Postgress avec Prisma.
 
-On vas réer une instance Postress hebergé sur un serveur par exemple un container Docker mais on vas utiliser Supabase un service as a backend similaire a Firebase pour generer un mot de passe de base de donnée et le collé dans son code pour se connecter a postgress.
+On vas créer une instance Postress hebergé sur un serveur par exemple un container Docker mais on vas utiliser Supabase un service as a backend similaire a Firebase pour generer un mot de passe de base de donnée et le collé dans son code pour se connecter a postgress.
 On vas utiliser un ORM ( object relation mapping ) au lieux d'ecrire des requette SQL.
 Prisma est le meilleur ORM du marché pour typescript. Il permet de faciliter l'écriture de requêtes, les migrations et la définition des tables avec leur structure.
 Pour se connecter à la base de données à partir de l'application, on peut initialiser un projet Prisma, connecter à la base de données en fournissant l'URL de la base de données, qui se trouve dans une variable d'environnement. Il faut ensuite modifier le mot de passe et on peut copier la chaîne de connexion depuis Supabase et la coller dans l'application.
@@ -552,6 +552,11 @@ To revoir le chapitre et noté les étapes.
 ## Section 6: Time to get your hand dirty
 
 ### Challenge 1 : Add Query Parameter.
+
+Dans ce defi on vas créer une page de recherche
+dynamique.
+
+Si par exemple on a localhost/search?city=toronto
 
 ## Question
 
