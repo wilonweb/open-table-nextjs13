@@ -26,11 +26,11 @@ Maintenant on a connecter notre application a notre BDD
 
 ## Le shema SQL
 
-On définis notre shemaSQL dans schema.prisma
+On définis notre shemaSQL (le model des data) dans schema.prisma
 
 Une fois qu'on a notreschema.prisma on le push avec `npx prisma db push` vers supabase.
 
-Ensuite on récupere les donner grace au fichier seeds.ts en l'ouvrant dans le navigateur.
+Ensuite on récupere les donner grace au fichier seeds.ts en l'ouvrant dans le navigateur a l'adresse localhost/api
 
 ## Les data de la BDD vers NextJS
 
@@ -38,7 +38,7 @@ Avec NextJS la récupération de donné se fait depuis un ORM pour être transmi
 
 ## Comment récupérer les données.
 
-On commence a les stocker dans une variable avec l'objet PrismeCleint
+On commence par les stocker dans une variable avec l'objet PrismaCleint
 
 ```javascript
 /*Ajout de l'import Prisma*/

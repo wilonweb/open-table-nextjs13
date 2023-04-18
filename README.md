@@ -413,7 +413,7 @@ ce qui permet de récupérer
 }
 ```
 
-qui vas nous permettre d'extraire le slug en changeant le paraetre "props" avec
+qui vas nous permettre d'extraire le slug en changeant le parametre "props" avec
 
 ```javascript
 ({ params }: { params: { slug: string } });
@@ -553,10 +553,26 @@ To revoir le chapitre et noté les étapes.
 
 ### Challenge 1 : Add Query Parameter.
 
-Dans ce defi on vas créer une page de recherche
-dynamique.
+Dans ce defi on vas implémenter une barre de recherche dynamique.
 
 Si par exemple on a localhost/search?city=toronto
+
+Pour ce faire on vas dans mon components/searchBar
+
+```javascript
+<button
+        className="rounded bg-red-600 px-9 py-2 text-white"
+        onClick={() => {
+          if (location === "") return;
+          router.push(`/search?city=${location}`);
+          setLocation("")
+        }}
+      >
+```
+
+j'utilise la méthode push() du router pour ajouter un nouvel élément à l'historique de navigation et naviguer vers une nouvelle page. La nouvelle page est spécifiée par l'URL /search?city=${location}, où ${location} est une variable qui contient une chaîne de caractères représentant la ville que l'utilisateur recherche.
+
+La deuxième ligne met à jour l'état de l'application en utilisant la méthode setLocation() pour définir la valeur de la variable d'état location sur une chaîne de caractères vide. Cela a pour effet de vider le champ de recherche dans l'interface utilisateur afin que l'utilisateur puisse effectuer une nouvelle recherche s'il le souhaite.
 
 ## Question
 
