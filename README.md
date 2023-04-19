@@ -574,6 +574,44 @@ j'utilise la méthode push() du router pour ajouter un nouvel élément à l'his
 
 La deuxième ligne met à jour l'état de l'application en utilisant la méthode setLocation() pour définir la valeur de la variable d'état location sur une chaîne de caractères vide. Cela a pour effet de vider le champ de recherche dans l'interface utilisateur afin que l'utilisateur puisse effectuer une nouvelle recherche s'il le souhaite.
 
+### Challenge 2 : Fetch Restaurants By Location
+
+Dans ce défi, on demande de récupérer les données de la base de données et de les afficher sur la page de recherche en fonction de la ville recherchée par l'utilisateur. Les étapes à suivre sont les suivantes :
+
+- extraire le paramètre de requête correspondant à la ville, utiliser Prisma pour récupérer les restaurants correspondant à cette ville en demandant uniquement les données nécessaires (titre, prix, image principale et slug)
+- gérer la capitalisation des villes dans la requête
+- afficher un message si aucune donnée n'est trouvée.
+
+### Solution challenge 2
+
+#### comment extraire les paramètres de chemin et de recherche
+
+components/searchBar/page.tsx
+
+```javascript
+export default function Search({
+  searchParams,
+}: {
+  searchParams: { city: string };
+})
+```
+
+#### fetch seulement les restaurant dont nous avons besoins ( location=city )
+
+- Prisma client
+- async(mySearch.type)=> findmany() WHERE ...
+- select
+
+```javascript
+if (!city) return prisma.restaurant.findMany(); //pour retourner tout les restaurant si il n'y a pas de city
+```
+
+#### Comment utiliser Prisma pour chercher les restaurants en fonction de la ville donnée et les renvoie
+
+#### Renvoyez tout les restaurant si il n'y a pas de ville donnée.
+
+On affiche un message d'erreur si on ne trouve pas de restaurant
+
 ## Question
 
 ### Qu'est ce qu'une clé primaire clé étrangere ?
