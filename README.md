@@ -363,7 +363,8 @@ ConnectionError est courante lors de l'utilisation d'une base de données gratui
 
 ### Fetching restaurant by slug
 
-Pour récuperer dynamiquement la page d'un restaurant.
+Pour récuperer les information d'un restaurant a partir du slug
+
 On commence par créer une instance Prisma dans le server component restaurant/slug/page.tsx
 
 ```javascript
@@ -383,6 +384,7 @@ Puis on passe props en parametre dans notre render pour y faire un console.log
 ```javascript
 export default function RestaurantDetails(props: any) {
   console.log({ props });
+  console.log(restaurant);
   //const restaurant = await fetchRestaurantBySlug();
   return (
     <>
@@ -413,7 +415,7 @@ ce qui permet de récupérer
 }
 ```
 
-qui vas nous permettre d'extraire le slug en changeant le parametre "props" avec
+ce qui vas nous permettre d'extraire le slug en changeant le paraetre "props" avec
 
 ```javascript
 ({ params }: { params: { slug: string } });
@@ -447,7 +449,39 @@ export default async function RestaurantDetails({
 }
 ```
 
+On selectionne seuelemt les information nécéssaire avec la methode select et l'interface.
+
+Ce qui donne,
+
+```javascript
+export default async function RestaurantDetails({
+  params,
+}: {
+  params: { slug: string },
+}) {
+  const restaurant = await fetchRestaurantBySlug(params.slug);
+  console.log(restaurant);
+  return (
+    <>
+      <div className="bg-white w-[70%] rounded p-3 shadow">
+        <RestaurantNavBar />
+        <Title />
+        <Rating />
+        <Description />
+        <Images />
+        <Reviews />
+      </div>
+      <div className="w-[27%] relative text-reg">
+        <ReservationCard />
+      </div>
+    </>
+  );
+}
+```
+
 On selectionne seulement les information nécéssaire avec la methode select et l'interface.
+
+Fetching-Data
 
 ```javascript
 interface Restaurant {
@@ -644,4 +678,25 @@ Par exemple, dans une table "Commandes", la clé étrangère pourrait faire réf
 
 un exemple d'énumération énumération pour les différents états possibles d'un article en stock, tels que "disponible", "en rupture de stock", "en commande"
 
-bonjour2
+<<<<<<< HEAD
+
+### Comment fetch les donnée dans un composant (slug)
+
+on créer une instance Prisma dans une fonction await/async ou on flitre avec where: slug et la methode find.unique et qui attend les information dans une variable.
+exemple **const restaurant**
+
+On passe dans le render la (props: any)
+pour loger {props} dans la console
+
+Ce qui nous donne les information nécéssaire pour mentionner en parametre de notre render
+
+exemple :
+
+```javascript
+({ params }: { params: { slug: string } });
+```
+
+Puis on définis dans le render de notre variable **const restaurant** avec un const restaurant = await fetchRestaurantBySlug(params.slug);
+Pour récuperer le slug.
+
+Ensuite on redéfinis notre instance prisma en mentionant le type "string" de notre props slug ainsi qu'une Promise
