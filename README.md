@@ -646,6 +646,11 @@ if (!city) return prisma.restaurant.findMany(); //pour retourner tout les restau
 
 On affiche un message d'erreur si on ne trouve pas de restaurant
 
+### Challenge 3 : Challenge 3 - Populating Data
+Dans ce défi on récupère les donné de restaurants récupéré sur une page sous forme de carte a itétrer en définissant des props typescript.
+
+
+
 ## Question
 
 ### Qu'est ce qu'une clé primaire clé étrangere ?
